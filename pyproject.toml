@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "cv-tool"
+version = "0.1.0"
+description = ""
+authors = ["Chandra Kiran G <chandrakiran.g19@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+python-nmap = "^0.7.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
