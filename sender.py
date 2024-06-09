@@ -17,7 +17,7 @@ def start_client(host, port):
             if pyperclip.paste() != previous_clipboard_content:
                 message = pyperclip.paste()
                 client_socket.sendall(message.encode())
-                pyperclip.copy("")
+                # pyperclip.copy("")
                 print(f"Sent: {message}")
                 previous_clipboard_content = message
     finally:
