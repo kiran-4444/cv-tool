@@ -21,7 +21,7 @@ def start_client(host, port):
 
 
 if __name__ == "__main__":
-    destination_mac_address = sys.argv[1]
+    destination_mac_address = sys.argv[1].upper()
     destination_ip_address = get_ip_from_mac(destination_mac_address)
     PORT = 65432  # Server's port
     start_client(destination_ip_address, PORT)

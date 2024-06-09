@@ -16,7 +16,6 @@ def get_ip_from_mac(mac_address) -> str | None:
 
     nm.scan(hosts="192.168.0.255/24", arguments="-sP -sn", sudo=True)
     hosts_list = [(x, nm[x]["addresses"].get("mac")) for x in nm.all_hosts()]
-
     ip_addr = None
     for host, mac_addr in hosts_list:
         if mac_addr == mac_address:
