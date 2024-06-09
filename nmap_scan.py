@@ -3,6 +3,7 @@ This module provides utility functions to scan the network
 """
 
 import socket
+
 import nmap
 
 

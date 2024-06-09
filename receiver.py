@@ -1,5 +1,7 @@
 import socket
 
+import pyperclip
+
 from nmap_scan import get_host_ip_address
 
 
@@ -17,6 +19,7 @@ def start_server(host, port):
         if not data:
             break
         print(f"Received: {data.decode()}")
+        pyperclip.copy(data.decode())
 
     conn.close()
 
