@@ -15,7 +15,7 @@ def start_server(host, port):
     print(f"Connection from {addr}")
 
     while True:
-        data = conn.recv(2048)
+        data = conn.recv(10240)
         if not data:
             break
         print(f"Received: {data.decode()}")
