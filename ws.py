@@ -7,16 +7,29 @@ import websockets
 from nmap_scan import get_host_ip_address
 
 if sys.argv[1] == "client":
+    # async def send_message():
+    #     uri = "ws://192.168.0.12:8765"  # Replace <server_ip> with the IP address of the server
+    #     async with websockets.connect(uri) as websocket:
+    #         previous_clipboard_content = None
+    #         while True:
+    #             response = await websocket.recv()
+    #             if response != previous_clipboard_content:
+    #                 pyperclip.copy(response)
+    #                 previous_clipboard_content = response
+    #                 print(f"Received response: {response}")
 
+    # asyncio.get_event_loop().run_until_complete(send_message())
     async def send_message():
-        uri = "ws://192.168.0.12:8765"  # Replace <server_ip> with the IP address of the server
+        uri = "ws://localhost:8765"  # Replace <server_ip> with the IP address of the server
         async with websockets.connect(uri) as websocket:
+            previous_clipboard_content = None
             while True:
-                previous_clipboard_content = None
-                response = await websocket.recv()
-                if response != previous_clipboard_content:
-                    pyperclip.copy(response)
-                    previous_clipboard_content = response
+                if pyperclip.paste() != previous_clipboard_content:
+                    message = pyperclip.paste()
+                    previous_clipboard_content = message
+                    await websocket.send(message)
+                    response = await websocket.recv()
+
                     print(f"Received response: {response}")
 
     asyncio.get_event_loop().run_until_complete(send_message())
