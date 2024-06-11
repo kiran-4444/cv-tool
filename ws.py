@@ -12,11 +12,12 @@ if sys.argv[1] == "client":
         uri = "ws://192.168.0.12:8765"  # Replace <server_ip> with the IP address of the server
         async with websockets.connect(uri) as websocket:
             while True:
-                message = input("Enter message to send: ")
-                await websocket.send(message)
+                previous_clipboard_content = None
                 response = await websocket.recv()
-                print(f"Received response: {response}")
-                pyperclip.copy(response)
+                if response != previous_clipboard_content:
+                    pyperclip.copy(response)
+                    previous_clipboard_content = response
+                    print(f"Received response: {response}")
 
     asyncio.get_event_loop().run_until_complete(send_message())
 
@@ -25,14 +26,10 @@ elif sys.argv[1] == "server":
     async def handler(websocket, path):
         print("Client connected")
         try:
-            previous_clipboard_content = None
             async for message in websocket:
-                if pyperclip.paste() != previous_clipboard_content:
-                    print(f"Received message: {message}")
-                    pyperclip.copy(message)
-                    previous_clipboard_content = message
-                    response = message
-                    await websocket.send(response)
+                print(f"Received message: {message}")
+                pyperclip.copy(message)
+                await websocket.send(message)
         except websockets.ConnectionClosed as e:
             print("Connection closed", e)
 
